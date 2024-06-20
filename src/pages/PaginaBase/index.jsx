@@ -5,12 +5,12 @@ import Rodape from "../../componetes/Rodape"
 
 const PaginaBase = () => {
   return(
-    <main>
+    <>
       <EstilosGlobais />
       <Cabecalho />
       <Outlet />
       <Rodape />
-    </main>
+    </>
   )
 }
 
