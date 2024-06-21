@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const DivEstilizada = styled.div`
   display: flex;
   flex-direction: column;
-  border: 3px solid #6BD1FF;
+  border: 3px solid ${(props) => props.cor};
   border-radius: 5px;
   width: 432px;
   height: 319.92px;
@@ -16,7 +16,7 @@ const DivEstilizada = styled.div`
     width: 100%;
     height: 59px;
     background: #000000E5;
-    box-shadow: 0px 0px 17px 8px #6BD1FF inset;
+    box-shadow: 0px 0px 17px 8px ${(props) => props.cor} inset;
   }
 `
 
@@ -27,7 +27,7 @@ const ImagemEstilizada = styled.img`
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-color: #6BD1FF;
+  border-color: ${(props) => props.cor};
   border-style: solid;
 `
 
@@ -45,18 +45,16 @@ const BotaoEstilizado = styled.button`
   color: #FFF;
   cursor: pointer;
 
-  
-
   img{
     width: 25.47px;
     height: 28px;
   }
 `
 
-const Card = ({ linkImg }) => {
+const Card = ({ linkImg, corCategoria }) => {
   return(
-    <DivEstilizada>
-      <ImagemEstilizada src={linkImg} alt='aa'/>
+    <DivEstilizada cor={corCategoria}>
+      <ImagemEstilizada src={linkImg} alt="Imagem do video" cor={corCategoria} />
 
       <div>
         <BotaoEstilizado> <img src="/icon/deletar.png" alt="icone de deletar"/> DELETAR</BotaoEstilizado>
@@ -68,6 +66,7 @@ const Card = ({ linkImg }) => {
 
 Card.propTypes = {
   linkImg: PropTypes.string.isRequired,
+  corCategoria: PropTypes.string.isRequired
 };
 
 export default Card

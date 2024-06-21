@@ -21,6 +21,14 @@ const Inicio = () => {
       <Categoria 
         titulo="FRONT END"
       />
+
+      <Categoria 
+        titulo="BACK END"
+      />
+
+      <Categoria 
+        titulo="MOBILE"
+      />
     </MainEstilizado>
   )
 }
