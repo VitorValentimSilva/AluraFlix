@@ -60,15 +60,29 @@ const Categoria = ({ titulo }) => {
 
   const cor = CorCategoria(titulo);
 
+  const deletarVideo = (id) => {
+    setVideos(videos.filter(video => video.id !== id));
+  };
+
+  const videosFiltrados = videos.filter(video => video.categoria === titulo);
+  const mostrarH2 = videosFiltrados.length > 0;
+
   return (
     <SectionEstilizado cor={cor}>
-      <h2>{titulo}</h2>
+      {mostrarH2 && <h2>{titulo}</h2>}
       
       <DivEstilizada>
 
         {videos.map((video) => {
           if (video.categoria === titulo) {
-            return <Card key={video.id} linkImg={video.img} corCategoria={cor} />;
+            return  <Card 
+                      key={video.id} 
+                      linkImg={video.img} 
+                      corCategoria={cor} 
+                      id={video.id}
+                      onDelete={deletarVideo}
+                      linkVideo={video.video}
+                    />;
           }
         })}
 

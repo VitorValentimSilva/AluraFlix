@@ -8,7 +8,7 @@ const FooterEstilizado = styled.footer`
   border: 4px 0px 0px 0px;
   border-top: 4px solid #2271D1;
   box-shadow: 0px 5px 29px 0px #2271D1B2;
-  background: #000000E5;
+  background: #030910;
 `
 
 const Rodape = () => {

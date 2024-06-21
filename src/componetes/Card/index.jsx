@@ -51,14 +51,22 @@ const BotaoEstilizado = styled.button`
   }
 `
 
-const Card = ({ linkImg, corCategoria }) => {
+const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo }) => {
   return(
     <DivEstilizada cor={corCategoria}>
-      <ImagemEstilizada src={linkImg} alt="Imagem do video" cor={corCategoria} />
+      <a href={linkVideo} target="_blank" rel="noopener noreferrer">
+        <ImagemEstilizada src={linkImg} alt="Imagem do vídeo" cor={corCategoria} />
+      </a>
 
       <div>
-        <BotaoEstilizado> <img src="/icon/deletar.png" alt="icone de deletar"/> DELETAR</BotaoEstilizado>
-        <BotaoEstilizado> <img src="/icon/editar.png" alt="icone de editar"/> EDITAR</BotaoEstilizado>
+        <BotaoEstilizado onClick={() => onDelete(id)}> 
+          <img src="/icon/deletar.png" alt="icone de deletar"/> 
+          DELETAR
+        </BotaoEstilizado>
+        <BotaoEstilizado> 
+          <img src="/icon/editar.png" alt="icone de editar"/> 
+          EDITAR
+        </BotaoEstilizado>
       </div>
     </DivEstilizada>
   )
@@ -66,7 +74,10 @@ const Card = ({ linkImg, corCategoria }) => {
 
 Card.propTypes = {
   linkImg: PropTypes.string.isRequired,
-  corCategoria: PropTypes.string.isRequired
+  corCategoria: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  linkVideo: PropTypes.string.isRequired
 };
 
 export default Card
