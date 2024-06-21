@@ -38,13 +38,14 @@ const DivEstilizada = styled.div`
   width: 50%;
 
   h1{
-    width: 297px;
+    width: 37%;
     height: 92px;
     border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;
+    text-align: center;
+    font-size: 43px;
     font-weight: 800;
     background: #6BD1FF;
     color: #FFF;
