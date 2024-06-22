@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const DivNavegacaoEstilizado = styled.div`
@@ -30,13 +30,27 @@ const DivNavegacaoEstilizado = styled.div`
 
 const CampoNavegacao = () => {
   const [selectedButton, setSelectedButton] = useState("Home")
+  const location = useLocation()
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setSelectedButton("Home");
+        break;
+      case "/novoVideo":
+        setSelectedButton("Novo Vídeo");
+        break;
+      default:
+        setSelectedButton(""); 
+        break;
+    }
+  }, [location.pathname]);
 
   return (
     <DivNavegacaoEstilizado>
       <Link to='/'>
         <button
           className={selectedButton === "Home" ? "selected" : ""}
-          onClick={() => setSelectedButton("Home")}
         >
           HOME
         </button>
@@ -45,7 +59,6 @@ const CampoNavegacao = () => {
       <Link to='/novoVideo'>
         <button
           className={selectedButton === "Novo Vídeo" ? "selected" : ""}
-          onClick={() => setSelectedButton("Novo Vídeo")}
         >
           NOVO VÍDEO
         </button>
