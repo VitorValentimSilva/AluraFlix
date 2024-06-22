@@ -19,22 +19,22 @@ const CorCategoria = (titulo) => {
 const SectionEstilizado = styled.section`
   margin: 0 4%;
   padding-bottom: 4%;
-
-  h2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 23%;
-    height: 70px;
-    font-size: 32px;
-    font-weight: 800;
-    line-height: 37.5px;
-    text-align: center;
-    color: #F5F5F5;
-    background: ${(props) => props.cor};
-    border-radius: 15px;
-  }
 `;
+
+const H2Estilizada = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23%;
+  height: 70px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 37.5px;
+  text-align: center;
+  color: #F5F5F5;
+  background: ${(props) => props.cor};
+  border-radius: 15px;
+`
 
 const DivEstilizada = styled.div`
   display: flex;
@@ -69,7 +69,7 @@ const Categoria = ({ titulo }) => {
 
   return (
     <SectionEstilizado cor={cor}>
-      {mostrarH2 && <h2>{titulo}</h2>}
+      {mostrarH2 && <H2Estilizada cor={cor}>{titulo}</H2Estilizada>}
       
       <DivEstilizada>
 
@@ -82,6 +82,9 @@ const Categoria = ({ titulo }) => {
                       id={video.id}
                       onDelete={deletarVideo}
                       linkVideo={video.video}
+                      categoria={video.categoria}
+                      titulo={video.titulo}
+                      descricao={video.descricao}
                     />;
           }
         })}

@@ -25,6 +25,7 @@ const FigureEstilizada = styled.figure`
 `;
 
 const Overlay = styled.div`
+  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;

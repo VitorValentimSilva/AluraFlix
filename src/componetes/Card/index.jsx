@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import PropTypes from 'prop-types';
+import EditarCard from "../EditarCard";
+import { useState } from "react";
 
 const DivEstilizada = styled.div`
   display: flex;
@@ -51,7 +53,22 @@ const BotaoEstilizado = styled.button`
   }
 `
 
-const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo }) => {
+const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo, categoria, titulo, descricao }) => {
+  const [onEditar, setOnEditar] = useState(false);
+
+  const handleCloseEditarCard = () => {
+    setOnEditar(false);
+  };
+
+  const cardData = {
+    titulo,
+    categoria,
+    descricao,
+    img: linkImg,
+    video: linkVideo,
+    id
+  }
+
   return(
     <DivEstilizada cor={corCategoria}>
       <a href={linkVideo} target="_blank" rel="noopener noreferrer">
@@ -63,11 +80,13 @@ const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo }) => {
           <img src="/icon/deletar.png" alt="icone de deletar"/> 
           DELETAR
         </BotaoEstilizado>
-        <BotaoEstilizado> 
+        <BotaoEstilizado onClick={() => setOnEditar(true)}> 
           <img src="/icon/editar.png" alt="icone de editar"/> 
           EDITAR
         </BotaoEstilizado>
       </div>
+
+      {onEditar && <EditarCard cardData={cardData} onClose={() => handleCloseEditarCard()} />}
     </DivEstilizada>
   )
 }
@@ -75,9 +94,12 @@ const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo }) => {
 Card.propTypes = {
   linkImg: PropTypes.string.isRequired,
   corCategoria: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
-  linkVideo: PropTypes.string.isRequired
+  linkVideo: PropTypes.string.isRequired,
+  titulo: PropTypes.string.isRequired,
+  categoria: PropTypes.string.isRequired,
+  descricao: PropTypes.string.isRequired,
 };
 
 export default Card
