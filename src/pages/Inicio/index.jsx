@@ -4,7 +4,6 @@ import Categoria from "../../componetes/Categoria"
 
 const MainEstilizado = styled.main`
   background-color:  #000000E5;
-  
 `
 
 const Inicio = () => {
