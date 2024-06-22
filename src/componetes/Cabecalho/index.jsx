@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import CampoNavegacao from "../CampoNavegacao"
+import { Link } from "react-router-dom"
 
 const HeaderEstilizado = styled.header`
   display: flex;
@@ -15,8 +16,10 @@ const HeaderEstilizado = styled.header`
 const Cabecalho = () => {
   return(
     <HeaderEstilizado>
-      <img src='/img/logo.png' alt='Logo'/>
-
+      <Link to="/">
+        <img src='/img/logo.png' alt='Logo'/>
+      </Link>
+      
       <CampoNavegacao />
     </HeaderEstilizado>
   )
