@@ -69,6 +69,23 @@ const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo, categoria, titul
     id
   }
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/videos/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete video');
+      }
+
+      onDelete(id);
+      alert('Vídeo excluído com sucesso!');
+    } catch (error) {
+      console.error('Error deleting video:', error);
+    }
+  };
+
   return(
     <DivEstilizada cor={corCategoria}>
       <a href={linkVideo} target="_blank" rel="noopener noreferrer">
@@ -76,7 +93,7 @@ const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo, categoria, titul
       </a>
 
       <div>
-        <BotaoEstilizado onClick={() => onDelete(id)}> 
+        <BotaoEstilizado onClick={handleDelete}> 
           <img src="/icon/deletar.png" alt="icone de deletar"/> 
           DELETAR
         </BotaoEstilizado>
