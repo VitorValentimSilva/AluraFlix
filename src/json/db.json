@@ -3,9 +3,9 @@
     {
       "titulo": "O que faz uma desenvolvedora front-end?",
       "categoria": "FRONT END",
+      "descricao": "O que é Front-end? Trabalhando na área os termos HTML, CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores. Mas o que eles fazem, afinal? Descubra com a Vanessa nesse episódio!",
       "img": "https://i.ytimg.com/vi/ZY3-MFxVdEw/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBNCNLYCgSJ2SPQ_WnyeaCRzu5wcw",
       "video": "https://www.youtube.com/watch?v=ZY3-MFxVdEw",
-      "descricao": "O que é Front-end? Trabalhando na área os termos HTML, CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores. Mas o que eles fazem, afinal? Descubra com a Vanessa nesse episódio!",
       "id": "1"
     },
     {
@@ -25,12 +25,12 @@
       "descricao": "Afinal, quem trabalha com Back-end faz o que? Com quais outras áreas da tecnologia essa pessoa acaba se relacionando no dia a dia de trabalho e quais os possíveis caminhos nessa carreira? 🤔"
     },
     {
-      "id": "4",
       "titulo": "O que é Front End e Back End? Diferenças que Você Precisa Saber",
       "categoria": "BACK END",
+      "descricao": "Descubra as nuances das stacks tecnológicas e a diferença fundamental entre Front End e Back End neste vídeo!",
       "img": "https://i.ytimg.com/vi/LDU4BCSxPp4/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBoPgnfJL-BZIxlVNT_rflx4snNww",
       "video": "https://www.youtube.com/watch?v=LDU4BCSxPp4",
-      "descricao": "Descubra as nuances das stacks tecnológicas e a diferença fundamental entre Front End e Back End neste vídeo!"
+      "id": "4"
     },
     {
       "id": "5",

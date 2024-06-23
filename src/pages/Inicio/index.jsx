@@ -4,6 +4,10 @@ import Categoria from "../../componetes/Categoria"
 
 const MainEstilizado = styled.main`
   background-color:  #000000E5;
+
+  @media(max-width: 800px){
+    padding-bottom: 25%;
+  }
 `
 
 const Inicio = () => {

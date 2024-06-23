@@ -5,6 +5,10 @@ import { useEffect, useState } from "react"
 const MainEstilizado = styled.main`
   padding: 0 5%;
   background-color: #191919;
+
+  @media(max-width: 800px){
+    padding-bottom: 30%;
+  }
 `
 
 const DivEstilizada = styled.div`
@@ -26,6 +30,17 @@ const DivEstilizada = styled.div`
     font-size: 20px;
     font-weight: 400;
     line-height: 23.44px;
+  }
+
+  @media(max-width: 800px){
+    h1{
+      font-size: 50px;
+      margin: 6% 0 0 0;
+    }
+
+    p{
+      font-size: 18px;
+    }
   }
 `
 

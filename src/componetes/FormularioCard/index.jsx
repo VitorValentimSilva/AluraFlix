@@ -6,15 +6,24 @@ const DivEstilizada = styled.div`
   padding-bottom: 6%;
 
   h3 {
-    margin: 0;
+    margin: 2% 0 0 0;
     color: #fff;
     font-size: 40px;
     font-weight: 600;
     line-height: 24px;
     text-align: left;
-    padding: 2% 0;
+    padding: 3% 0;
     border-top: 4px solid #262626;
     border-bottom: 4px solid #262626;
+  }
+
+  @media(max-width: 800px){
+    h3{
+      font-size: 38px;
+      text-align: center;
+      padding: 8%;
+      margin: 12% 0;
+    }
   }
 `;
 
@@ -79,7 +88,7 @@ const FormEstilizado = styled.form`
     border-radius: 10px;
     transition: all 0.3s ease;
     padding: 10px 20px;
-    width: 12%;
+    width: auto;
     margin-right: 4%;
     margin-top: 1%;
   }
@@ -89,6 +98,19 @@ const FormEstilizado = styled.form`
     background: #000000E5;
     border: 2px solid #2271D1;
     box-shadow: 0px 0px 12px 4px #2271D1 inset;
+  }
+
+  @media(max-width: 800px){
+    input,
+    select,
+    textarea{
+      margin-bottom: 10%;
+    }
+
+    .input-group {
+      flex-direction: column;
+      gap: 0;
+    }
   }
 `;
 

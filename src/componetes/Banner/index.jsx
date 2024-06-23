@@ -22,6 +22,16 @@ const FigureEstilizada = styled.figure`
     width: 50%;
     height: 60%;
   }
+
+  @media(max-width: 1100px) and (min-width: 801px){
+    iframe{
+      height: 40%;
+    }
+  }
+
+  @media(max-width: 800px){
+    display: none;
+  }
 `;
 
 const Overlay = styled.div`
@@ -75,6 +85,24 @@ const DivEstilizada = styled.div`
     line-height: 21.09px;
     text-align: justify;
     color: #FFF;
+  }
+
+  @media(max-width: 1100px) and (min-width: 801px){
+    h1{
+      font-size: 35px;
+    }
+
+    h2{
+      font-size: 40px;
+    }
+
+    p{
+      font-size: 16.5px;
+    }
+  }
+
+  @media(max-width: 800px){
+    display: none;
   }
 `
 

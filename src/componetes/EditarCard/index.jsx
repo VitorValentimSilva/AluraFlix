@@ -18,13 +18,35 @@ const Overlay = styled.section`
 const SectionEstilizada = styled.section`
   background: #03122F;
   border: 5px solid #6BD1FF;
-  width: 500px;
-  height: 90%;
+  width: 60%;
+  max-height: 90%;
   padding: 2% 6.5%;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
   position: relative;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #2271D12B;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    
+    border: 10px solid #2271D1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border: 10px solid #2271D1;
+  }
 
   img {
     display: block;
@@ -60,11 +82,11 @@ const SectionEstilizada = styled.section`
     padding: 15px;
     background-color: #03122F;
     color: #FFF;
-    border: 3px solid  #2271D1;
+    border: 3px solid #2271D1;
     border-radius: 10px;
   }
 
-  textarea{
+  textarea {
     height: 85px;
   }
 
@@ -96,51 +118,48 @@ const SectionEstilizada = styled.section`
     border: 2px solid #2271D1;
     box-shadow: 0px 0px 12px 4px #2271D1 inset;
   }
+
+  @media(max-width: 800px){
+    width: 80%;
+    max-height: 93%;
+    
+    h2 {
+      font-size: 40px;
+      text-align: center;
+    }
+  }
 `;
 
-const EditarCard = ({ cardData, onClose }) => {
-  const { id } = cardData; 
+const EditarCard = ({ cardData, onClose, onEdit }) => {
+  const [formData, setFormData] = useState(cardData);
 
-  const [tituloState, setTituloState] = useState(cardData.titulo);
-  const [categoriaState, setCategoriaState] = useState(cardData.categoria);
-  const [imgState, setImgState] = useState(cardData.img);
-  const [videoState, setVideoState] = useState(cardData.video);
-  const [descricaoState, setDescricaoState] = useState(cardData.descricao);
-
-  const handleReset = () => {
-    setTituloState(cardData.titulo);
-    setCategoriaState(cardData.categoria);
-    setImgState(cardData.img);
-    setVideoState(cardData.video);
-    setDescricaoState(cardData.descricao);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedData = {
-      titulo: tituloState,
-      categoria: categoriaState,
-      img: imgState,
-      video: videoState,
-      descricao: descricaoState,
-    };
-
-    fetch(`http://localhost:3000/videos/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Dados atualizados com sucesso:', data);
-        onClose();
-      })
-      .catch(error => {
-        console.error('Erro ao atualizar dados:', error);
+    try {
+      const response = await fetch(`http://localhost:3000/videos/${formData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to update video');
+      }
+
+      onEdit(formData);
+      alert('Vídeo atualizado com sucesso!');
+      onClose();
+    } catch (error) {
+      console.error('Error updating video:', error);
+    }
   };
 
   return (
@@ -154,8 +173,8 @@ const EditarCard = ({ cardData, onClose }) => {
             type="text"
             name="titulo"
             id="ititulo"
-            value={tituloState}
-            onChange={(e) => setTituloState(e.target.value)}
+            value={formData.titulo}
+            onChange={handleChange}
             required
           />
 
@@ -163,8 +182,8 @@ const EditarCard = ({ cardData, onClose }) => {
           <select
             id="icategoria"
             name="categoria"
-            value={categoriaState}
-            onChange={(e) => setCategoriaState(e.target.value)}
+            value={formData.categoria}
+            onChange={handleChange}
           >
             <option value="FRONT END">Front End</option>
             <option value="BACK END">Back End</option>
@@ -176,8 +195,8 @@ const EditarCard = ({ cardData, onClose }) => {
             type="url"
             name="img"
             id="iimg"
-            value={imgState}
-            onChange={(e) => setImgState(e.target.value)}
+            value={formData.img}
+            onChange={handleChange}
             required
           />
 
@@ -186,8 +205,8 @@ const EditarCard = ({ cardData, onClose }) => {
             type="url"
             name="video"
             id="ivideo"
-            value={videoState}
-            onChange={(e) => setVideoState(e.target.value)}
+            value={formData.video}
+            onChange={handleChange}
             required
           />
 
@@ -195,13 +214,14 @@ const EditarCard = ({ cardData, onClose }) => {
           <textarea
             name="descricao"
             id="idescricao"
-            value={descricaoState}
-            onChange={(e) => setDescricaoState(e.target.value)}
+            value={formData.descricao}
+            onChange={handleChange}
+            required
           ></textarea>
 
           <div className="button-container">
             <input type="submit" value="GUARDAR" />
-            <input type="reset" value="LIMPAR" onClick={handleReset} />
+            <input type="reset" value="LIMPAR" onClick={onClose} />
           </div>
         </form>
       </SectionEstilizada>
@@ -210,8 +230,9 @@ const EditarCard = ({ cardData, onClose }) => {
 }
 
 EditarCard.propTypes = {
-  cardData: PropTypes.object,
+  cardData: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default EditarCard;

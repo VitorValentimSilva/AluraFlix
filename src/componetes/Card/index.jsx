@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import PropTypes from 'prop-types';
 import EditarCard from "../EditarCard";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const DivEstilizada = styled.div`
   width: 432px;
   height: 319.92px;
 
-  div{
+  div {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -20,7 +20,7 @@ const DivEstilizada = styled.div`
     background: #000000E5;
     box-shadow: 0px 0px 17px 8px ${(props) => props.cor} inset;
   }
-`
+`;
 
 const ImagemEstilizada = styled.img`
   width: 100%;
@@ -31,7 +31,7 @@ const ImagemEstilizada = styled.img`
   border-right: 0;
   border-color: ${(props) => props.cor};
   border-style: solid;
-`
+`;
 
 const BotaoEstilizado = styled.button`
   display: flex;
@@ -47,27 +47,18 @@ const BotaoEstilizado = styled.button`
   color: #FFF;
   cursor: pointer;
 
-  img{
+  img {
     width: 25.47px;
     height: 28px;
   }
-`
+`;
 
-const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo, categoria, titulo, descricao }) => {
+const Card = ({ linkImg, corCategoria, id, onDelete, onEdit, linkVideo, categoria, titulo, descricao }) => {
   const [onEditar, setOnEditar] = useState(false);
 
   const handleCloseEditarCard = () => {
     setOnEditar(false);
   };
-
-  const cardData = {
-    titulo,
-    categoria,
-    descricao,
-    img: linkImg,
-    video: linkVideo,
-    id
-  }
 
   const handleDelete = async () => {
     try {
@@ -86,37 +77,53 @@ const Card = ({ linkImg, corCategoria, id, onDelete, linkVideo, categoria, titul
     }
   };
 
-  return(
+  const cardData = {
+    titulo,
+    categoria,
+    descricao,
+    img: linkImg,
+    video: linkVideo,
+    id
+  };
+
+  return (
     <DivEstilizada cor={corCategoria}>
       <a href={linkVideo} target="_blank" rel="noopener noreferrer">
         <ImagemEstilizada src={linkImg} alt="Imagem do vídeo" cor={corCategoria} />
       </a>
 
       <div>
-        <BotaoEstilizado onClick={handleDelete}> 
-          <img src="/icon/deletar.png" alt="icone de deletar"/> 
+        <BotaoEstilizado onClick={handleDelete}>
+          <img src="/icon/deletar.png" alt="icone de deletar" />
           DELETAR
         </BotaoEstilizado>
-        <BotaoEstilizado onClick={() => setOnEditar(true)}> 
-          <img src="/icon/editar.png" alt="icone de editar"/> 
+        <BotaoEstilizado onClick={() => setOnEditar(true)}>
+          <img src="/icon/editar.png" alt="icone de editar" />
           EDITAR
         </BotaoEstilizado>
       </div>
 
-      {onEditar && <EditarCard cardData={cardData} onClose={() => handleCloseEditarCard()} />}
+      {onEditar && (
+        <EditarCard 
+          cardData={cardData} 
+          onClose={handleCloseEditarCard} 
+          onEdit={onEdit} 
+        />
+      )}
     </DivEstilizada>
-  )
-}
+  );
+};
 
 Card.propTypes = {
   linkImg: PropTypes.string.isRequired,
   corCategoria: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   linkVideo: PropTypes.string.isRequired,
   titulo: PropTypes.string.isRequired,
   categoria: PropTypes.string.isRequired,
-  descricao: PropTypes.string.isRequired,
+  descricao: PropTypes.string.isRequired
 };
 
-export default Card
+export default Card;
