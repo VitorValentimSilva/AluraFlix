@@ -6,7 +6,7 @@ export const VideoProvider = ({ children }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/videos')
+    fetch('https://json-test-indol.vercel.app/videos')
       .then((resposta) => resposta.json())
       .then((dados) => {
         setVideos(dados);
@@ -15,7 +15,7 @@ export const VideoProvider = ({ children }) => {
 
   const deletarVideo = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/videos/${id}`, {
+      const response = await fetch(`https://json-test-indol.vercel.app/videos/${id}`, {
         method: 'DELETE',
       });
 
@@ -32,7 +32,7 @@ export const VideoProvider = ({ children }) => {
 
   const editarVideo = async (videoEditado) => {
     try {
-      const response = await fetch(`http://localhost:3000/videos/${videoEditado.id}`, {
+      const response = await fetch(`https://json-test-indol.vercel.app/videos/${videoEditado.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const VideoProvider = ({ children }) => {
 
   const adicionarVideo = async (novoVideo) => {
     try {
-      const response = await fetch('http://localhost:3000/videos', {
+      const response = await fetch('https://json-test-indol.vercel.app/videos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
