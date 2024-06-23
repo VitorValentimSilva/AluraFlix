@@ -25,7 +25,7 @@ const DivEstilizada = styled.div`
       margin: 12% 0;
     }
   }
-`;
+`
 
 const FormEstilizado = styled.form`
   display: flex;
@@ -61,6 +61,12 @@ const FormEstilizado = styled.form`
     margin-bottom: 16px;
     margin-top: 1.5%;
     color: #FFF;
+  }
+
+  input.error,
+  select.error,
+  textarea.error {
+    border-color: red;
   }
 
   select{
@@ -112,7 +118,7 @@ const FormEstilizado = styled.form`
       gap: 0;
     }
   }
-`;
+`
 
 const FormularioCard = ({ onAddVideo }) => {
   const [titulo, setTitulo] = useState('')
@@ -120,9 +126,22 @@ const FormularioCard = ({ onAddVideo }) => {
   const [img, setImg] = useState('')
   const [video, setVideo] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    const newErrors = {}
+    if (!titulo) newErrors.titulo = 'O título é obrigatório'
+    if (!categoria) newErrors.categoria = 'A categoria é obrigatória'
+    if (!img) newErrors.img = 'O link da imagem é obrigatório'
+    if (!video) newErrors.video = 'O link do vídeo é obrigatório'
+    if (!descricao) newErrors.descricao = 'A descrição é obrigatória'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
 
     const response = await fetch('http://localhost:3000/videos');
     const data = await response.json();
@@ -147,6 +166,7 @@ const FormularioCard = ({ onAddVideo }) => {
     setImg('')
     setVideo('')   
     setDescricao('')
+    setErrors({})
   };
 
   return (
@@ -161,10 +181,10 @@ const FormularioCard = ({ onAddVideo }) => {
               type="text"
               name="titulo"
               id="ititulo"
-              required
-              placeholder="Insira o título"
+              placeholder={errors.titulo ? errors.titulo : "Insira o título"}
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
+              className={errors.titulo ? 'error' : ''}
             />
           </div>
 
@@ -173,11 +193,12 @@ const FormularioCard = ({ onAddVideo }) => {
             <select
               id="icategoria"
               name="categoria"
-              required
-              placeholder="Selecione uma categoria"
+              placeholder={errors.categoria ? errors.categoria : "Selecione uma categoria"}
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
+              className={errors.categoria ? 'error' : ''}
             >
+              <option value="">{errors.categoria ? errors.categoria : "Selecione uma categoria"}</option>
               <option value="FRONT END">Front End</option>
               <option value="BACK END">Back End</option>
               <option value="MOBILE">Mobile</option>
@@ -192,10 +213,10 @@ const FormularioCard = ({ onAddVideo }) => {
               type="url"
               name="imagem"
               id="iimagem"
-              required
-              placeholder="Digite o link da imagem"
+              placeholder={errors.img ? errors.img : "Digite o link da imagem"}
               value={img}
               onChange={(e) => setImg(e.target.value)}
+              className={errors.img ? 'error' : ''}
             />
           </div>
 
@@ -205,10 +226,10 @@ const FormularioCard = ({ onAddVideo }) => {
               type="url"
               name="video"
               id="ivideo"
-              required
-              placeholder="Digite o link do video"
+              placeholder={errors.video ? errors.video : "Digite o link do video"}
               value={video}
               onChange={(e) => setVideo(e.target.value)}
+              className={errors.video ? 'error' : ''}
             />
           </div>
         </div>
@@ -217,15 +238,22 @@ const FormularioCard = ({ onAddVideo }) => {
         <textarea
           name="descricao"
           id="idescricao"
-          placeholder="Sobre o que é esse vídeo?"
-          required
+          placeholder={errors.descricao ? errors.descricao : "Sobre o que é esse vídeo?"}
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
+          className={errors.descricao ? 'error' : ''}
         ></textarea>
 
         <div>
           <button type="submit">GUARDAR</button>
-          <button type="reset">LIMPAR</button>
+          <button type="reset" onClick={() => {
+            setTitulo('')
+            setCategoria('')
+            setImg('')
+            setVideo('')   
+            setDescricao('')
+            setErrors({})
+          }}>LIMPAR</button>
         </div>
       </FormEstilizado>
     </DivEstilizada>
