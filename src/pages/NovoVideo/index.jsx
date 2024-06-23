@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import FormularioCard from "../../componetes/FormularioCard"
-import { useEffect, useState } from "react"
 
 const MainEstilizado = styled.main`
   padding: 0 5%;
@@ -45,38 +44,6 @@ const DivEstilizada = styled.div`
 `
 
 const NovoVideo = () => {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/videos')
-      .then(resposta => resposta.json())
-      .then(dados => {
-        setVideos(dados)
-      })
-  }, [])
-
-  const handleAddVideo = async (novoVideo) => {
-    try {
-      const response = await fetch('http://localhost:3000/videos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(novoVideo)
-      });
-
-      if (!response.ok) {
-        throw new Error('Falha ao adicionar vídeo')
-      }
-
-      const addedVideo = await response.json()
-      setVideos([...videos, addedVideo])
-      alert('Vídeo adicionado com sucesso!')
-    } catch (error) {
-      console.error('Erro ao adicionar vídeo:', error)
-    }
-  };
-
   return(
     <MainEstilizado>
       <section>
@@ -85,7 +52,7 @@ const NovoVideo = () => {
           <p>Complete o formulário para criar um novo card de vídeo.</p>
         </DivEstilizada>
 
-        <FormularioCard onAddVideo={handleAddVideo} />
+        <FormularioCard />
       </section>
     </MainEstilizado>
   )

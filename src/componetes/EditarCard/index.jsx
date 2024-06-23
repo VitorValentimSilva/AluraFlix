@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import VideoContext from '../../contextos/VideoContext';
 
 const Overlay = styled.section`
   background-color: #03122FC2;
@@ -139,9 +140,10 @@ const SectionEstilizada = styled.section`
   }
 `;
 
-const EditarCard = ({ cardData, onClose, onEdit }) => {
+const EditarCard = ({ cardData, onClose }) => {
   const [formData, setFormData] = useState(cardData);
   const [errors, setErrors] = useState({});
+  const { editarVideo } = useContext(VideoContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -181,25 +183,8 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
       return;
     }
 
-    try {
-      const response = await fetch(`http://localhost:3000/videos/${formData.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Falha ao atualizar o vídeo');
-      }
-
-      onEdit(formData);
-      alert('Vídeo atualizado com sucesso!');
-      onClose();
-    } catch (error) {
-      console.error('Erro ao atualizar o vídeo:', error);
-    }
+    editarVideo(formData);
+    onClose();
   };
 
   return (
@@ -286,8 +271,7 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
 
 EditarCard.propTypes = {
   cardData: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
 export default EditarCard;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 import EditarCard from "../EditarCard";
 import { useState } from "react";
+import useVideoContext from "../../contextos/useVideoContext";
 
 const DivEstilizada = styled.div`
   display: flex;
@@ -53,38 +54,19 @@ const BotaoEstilizado = styled.button`
   }
 `;
 
-const Card = ({ linkImg, corCategoria, id, onDelete, onEdit, linkVideo, categoria, titulo, descricao }) => {
+const Card = ({ linkImg, corCategoria, id, linkVideo, titulo, categoria, descricao }) => {
   const [onEditar, setOnEditar] = useState(false);
+  const { deletarVideo } = useVideoContext(); 
 
   const handleCloseEditarCard = () => {
     setOnEditar(false);
   };
 
   const handleDelete = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/videos/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete video');
-      }
-
-      onDelete(id);
-      alert('Vídeo excluído com sucesso!');
-    } catch (error) {
-      console.error('Error deleting video:', error);
-    }
+    await deletarVideo(id);
   };
 
-  const cardData = {
-    titulo,
-    categoria,
-    descricao,
-    img: linkImg,
-    video: linkVideo,
-    id
-  };
+  const cardData = { id, titulo, categoria, descricao, img: linkImg, video: linkVideo };
 
   return (
     <DivEstilizada cor={corCategoria}>
@@ -107,7 +89,6 @@ const Card = ({ linkImg, corCategoria, id, onDelete, onEdit, linkVideo, categori
         <EditarCard 
           cardData={cardData} 
           onClose={handleCloseEditarCard} 
-          onEdit={onEdit} 
         />
       )}
     </DivEstilizada>
@@ -118,8 +99,6 @@ Card.propTypes = {
   linkImg: PropTypes.string.isRequired,
   corCategoria: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
   linkVideo: PropTypes.string.isRequired,
   titulo: PropTypes.string.isRequired,
   categoria: PropTypes.string.isRequired,

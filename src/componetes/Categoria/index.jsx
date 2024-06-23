@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import Card from "../Card";
-import { useEffect, useState } from "react";
+import useVideoContext from "../../contextos/useVideoContext";
 
 const CorCategoria = (titulo) => {
   switch (titulo) {
@@ -79,28 +79,9 @@ const DivEstilizada = styled.div`
 `;
 
 const Categoria = ({ titulo }) => {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/videos')
-      .then((resposta) => resposta.json())
-      .then((dados) => {
-        setVideos(dados);
-      });
-  }, []);
+  const { videos } = useVideoContext();
 
   const cor = CorCategoria(titulo);
-
-  const deletarVideo = (id) => {
-    setVideos(videos.filter((video) => video.id !== id));
-  };
-
-  const editarVideo = (videoEditado) => {
-    setVideos((prevVideos) => {
-      const outrosVideos = prevVideos.filter((video) => video.id !== videoEditado.id);
-      return [...outrosVideos, videoEditado];
-    });
-  };
 
   const videosFiltrados = videos.filter((video) => video.categoria === titulo);
   const mostrarH2 = videosFiltrados.length > 0;
@@ -116,8 +97,6 @@ const Categoria = ({ titulo }) => {
             linkImg={video.img}
             corCategoria={cor}
             id={video.id}
-            onDelete={deletarVideo}
-            onEdit={editarVideo}
             linkVideo={video.video}
             categoria={video.categoria}
             titulo={video.titulo}

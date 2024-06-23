@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types';
+import useVideoContext from "../../contextos/useVideoContext";
 
 const DivEstilizada = styled.div`
   padding-bottom: 6%;
@@ -120,53 +120,46 @@ const FormEstilizado = styled.form`
   }
 `
 
-const FormularioCard = ({ onAddVideo }) => {
-  const [titulo, setTitulo] = useState('')
-  const [categoria, setCategoria] = useState('')
-  const [img, setImg] = useState('')
-  const [video, setVideo] = useState('')
-  const [descricao, setDescricao] = useState('')
-  const [errors, setErrors] = useState({})
+const FormularioCard = () => {
+  const { adicionarVideo } = useVideoContext();
+  const [titulo, setTitulo] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [img, setImg] = useState('');
+  const [video, setVideo] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const newErrors = {}
-    if (!titulo) newErrors.titulo = 'O título é obrigatório'
-    if (!categoria) newErrors.categoria = 'A categoria é obrigatória'
-    if (!img) newErrors.img = 'O link da imagem é obrigatório'
-    if (!video) newErrors.video = 'O link do vídeo é obrigatório'
-    if (!descricao) newErrors.descricao = 'A descrição é obrigatória'
+    const newErrors = {};
+    if (!titulo) newErrors.titulo = 'O título é obrigatório';
+    if (!categoria) newErrors.categoria = 'A categoria é obrigatória';
+    if (!img) newErrors.img = 'O link da imagem é obrigatório';
+    if (!video) newErrors.video = 'O link do vídeo é obrigatório';
+    if (!descricao) newErrors.descricao = 'A descrição é obrigatória';
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
+      setErrors(newErrors);
+      return;
     }
 
-    const response = await fetch('http://localhost:3000/videos');
-    const data = await response.json();
-
-    const ids = data.map(video => parseInt(video.id, 10));
-    const maxId = Math.max(...ids);
-    const newId = maxId + 1;
-
     const novoVideo = {
-      id: newId.toString(),
       titulo,
       categoria,
       img,
       video,
       descricao
-    }
+    };
 
-    onAddVideo(novoVideo)
+    adicionarVideo(novoVideo);
 
-    setTitulo('')
-    setCategoria('')
-    setImg('')
-    setVideo('')   
-    setDescricao('')
-    setErrors({})
+    setTitulo('');
+    setCategoria('');
+    setImg('');
+    setVideo('');
+    setDescricao('');
+    setErrors({});
   };
 
   return (
@@ -258,10 +251,6 @@ const FormularioCard = ({ onAddVideo }) => {
       </FormEstilizado>
     </DivEstilizada>
   );
-};
-
-FormularioCard.propTypes = {
-  onAddVideo: PropTypes.func.isRequired
 };
 
 export default FormularioCard;
