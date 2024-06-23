@@ -38,7 +38,6 @@ const SectionEstilizada = styled.section`
 
   &::-webkit-scrollbar-thumb {
     background: #888;
-    
     border: 10px solid #2271D1;
     border-radius: 10px;
   }
@@ -84,6 +83,16 @@ const SectionEstilizada = styled.section`
     color: #FFF;
     border: 3px solid #2271D1;
     border-radius: 10px;
+  }
+
+  input.error, select.error, textarea.error {
+    border: 3px solid red;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 14px;
   }
 
   textarea {
@@ -132,14 +141,45 @@ const SectionEstilizada = styled.section`
 
 const EditarCard = ({ cardData, onClose, onEdit }) => {
   const [formData, setFormData] = useState(cardData);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: 'Este campo é obrigatório' });
+    } else {
+      const newErrors = { ...errors };
+      delete newErrors[name];
+      setErrors(newErrors);
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: 'Este campo é obrigatório' });
+    }
+  };
+
+  const handleReset = () => {
+    setFormData({});
+    setErrors({});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key].trim() === '') {
+        newErrors[key] = 'Este campo é obrigatório';
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       const response = await fetch(`http://localhost:3000/videos/${formData.id}`, {
@@ -151,14 +191,14 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update video');
+        throw new Error('Falha ao atualizar o vídeo');
       }
 
       onEdit(formData);
       alert('Vídeo atualizado com sucesso!');
       onClose();
     } catch (error) {
-      console.error('Error updating video:', error);
+      console.error('Erro ao atualizar o vídeo:', error);
     }
   };
 
@@ -173,8 +213,11 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
             type="text"
             name="titulo"
             id="ititulo"
-            value={formData.titulo}
+            value={formData.titulo || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.titulo ? 'error' : ''}
+            placeholder={errors.titulo || 'Insira o título'}
             required
           />
 
@@ -182,9 +225,12 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
           <select
             id="icategoria"
             name="categoria"
-            value={formData.categoria}
+            value={formData.categoria || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.categoria ? 'error' : ''}
           >
+            <option value="">Selecione uma categoria</option>
             <option value="FRONT END">Front End</option>
             <option value="BACK END">Back End</option>
             <option value="MOBILE">Mobile</option>
@@ -195,8 +241,11 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
             type="url"
             name="img"
             id="iimg"
-            value={formData.img}
+            value={formData.img || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.img ? 'error' : ''}
+            placeholder={errors.img || 'Insira a URL da imagem'}
             required
           />
 
@@ -205,8 +254,11 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
             type="url"
             name="video"
             id="ivideo"
-            value={formData.video}
+            value={formData.video || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.video ? 'error' : ''}
+            placeholder={errors.video || 'Insira a URL do vídeo'}
             required
           />
 
@@ -214,14 +266,17 @@ const EditarCard = ({ cardData, onClose, onEdit }) => {
           <textarea
             name="descricao"
             id="idescricao"
-            value={formData.descricao}
+            value={formData.descricao || ''}
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.descricao ? 'error' : ''}
+            placeholder={errors.descricao || 'Insira a descrição'}
             required
           ></textarea>
 
           <div className="button-container">
             <input type="submit" value="GUARDAR" />
-            <input type="reset" value="LIMPAR" onClick={onClose} />
+            <input type="reset" value="LIMPAR" onClick={handleReset} />
           </div>
         </form>
       </SectionEstilizada>
