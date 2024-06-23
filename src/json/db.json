@@ -39,6 +39,14 @@
       "img": "https://i.ytimg.com/vi/fWscDFHKgw8/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAGWxeg1S9RgOFxwlcvrHHXb4lbFA",
       "video": "https://www.youtube.com/watch?v=fWscDFHKgw8",
       "descricao": "Um episódio focado no desenvolvimento de aplicações Android. Neste bate-papo, Paulo Silveira e Felipe Torres conversam sobre os primeiros passos para começar a desenvolver, quais as principais ferramentas do desenvolvimento mobile, como colocar sua aplicação no ar e mais!"
+    },
+    {
+      "id": "6",
+      "titulo": "Como Se Tornar Um Desenvolvedor MOBILE em 2024? (ROADMAP de tecnologias ATUALIZADO)",
+      "categoria": "MOBILE",
+      "img": "https://i.ytimg.com/vi/COY5vTa778g/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB401MTeOaAyrV2IxCpYczcXzz-Sg",
+      "video": "https://www.youtube.com/watch?v=COY5vTa778g",
+      "descricao": "Um desenvolvedor mobile é um profissional que cria aplicativos para smartphones e tablets e smartwatchs usando linguagens como Kotlin, Java, Swift, Dart, C# e Javascript. Uma área em constante crescimento que vem passando por muitas transformações nos últimos anos. "
     }
   ]
 }

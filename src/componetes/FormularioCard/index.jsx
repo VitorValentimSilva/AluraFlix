@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 const DivEstilizada = styled.div`
   padding-bottom: 6%;
@@ -90,12 +92,46 @@ const FormEstilizado = styled.form`
   }
 `;
 
-const FormularioCard = () => {
+const FormularioCard = ({ onAddVideo }) => {
+  const [titulo, setTitulo] = useState('')
+  const [categoria, setCategoria] = useState('')
+  const [img, setImg] = useState('')
+  const [video, setVideo] = useState('')
+  const [descricao, setDescricao] = useState('')
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const response = await fetch('http://localhost:3000/videos');
+    const data = await response.json();
+
+    const ids = data.map(video => parseInt(video.id, 10));
+    const maxId = Math.max(...ids);
+    const newId = maxId + 1;
+
+    const novoVideo = {
+      id: newId.toString(),
+      titulo,
+      categoria,
+      img,
+      video,
+      descricao
+    }
+
+    onAddVideo(novoVideo)
+
+    setTitulo('')
+    setCategoria('')
+    setImg('')
+    setVideo('')   
+    setDescricao('')
+  };
+
   return (
     <DivEstilizada>
       <h3>Criar Card</h3>
 
-      <FormEstilizado>
+      <FormEstilizado onSubmit={handleSubmit}>
         <div className="input-group">
           <div>
             <label htmlFor="ititulo">Titulo</label>
@@ -105,6 +141,8 @@ const FormularioCard = () => {
               id="ititulo"
               required
               placeholder="Insira o título"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
             />
           </div>
 
@@ -115,6 +153,8 @@ const FormularioCard = () => {
               name="categoria"
               required
               placeholder="Selecione uma categoria"
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
             >
               <option value="FRONT END">Front End</option>
               <option value="BACK END">Back End</option>
@@ -132,6 +172,8 @@ const FormularioCard = () => {
               id="iimagem"
               required
               placeholder="Digite o link da imagem"
+              value={img}
+              onChange={(e) => setImg(e.target.value)}
             />
           </div>
 
@@ -143,6 +185,8 @@ const FormularioCard = () => {
               id="ivideo"
               required
               placeholder="Digite o link do video"
+              value={video}
+              onChange={(e) => setVideo(e.target.value)}
             />
           </div>
         </div>
@@ -152,6 +196,9 @@ const FormularioCard = () => {
           name="descricao"
           id="idescricao"
           placeholder="Sobre o que é esse vídeo?"
+          required
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
         ></textarea>
 
         <div>
@@ -161,6 +208,10 @@ const FormularioCard = () => {
       </FormEstilizado>
     </DivEstilizada>
   );
+};
+
+FormularioCard.propTypes = {
+  onAddVideo: PropTypes.func.isRequired
 };
 
 export default FormularioCard;
