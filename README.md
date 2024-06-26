@@ -23,38 +23,6 @@ AluraFlix é uma plataforma que permite listar, registrar, eliminar e atualizar 
 - **Remoção de vídeos:** Delete um vídeo da lista.
 - **Categorias Dinâmicas:** Categorias sem vídeos cadastrados não são exibidas.
 
-## Como Executar o Projeto
-
-1. Clone o repositório:
-    ```bash
-    git clone https://github.com/seu-usuario/aluraflix.git
-    ```
-
-2. Navegue até o diretório do projeto:
-    ```bash
-    cd aluraflix
-    ```
-
-3. Instale as dependências:
-    ```bash
-    npm install
-    ```
-
-4. Inicie o servidor JSON:
-    ```bash
-    npx json-server --watch db.json --port 8000
-    ```
-
-5. Execute o projeto:
-    ```bash
-    npm run dev
-    ```
-
-6. Acesse o projeto no navegador:
-    ```
-    http://localhost:3000
-    ```
-
 ## Demonstração
 
 Confira o projeto em funcionamento [aqui](https://alura-flix-olive.vercel.app).
