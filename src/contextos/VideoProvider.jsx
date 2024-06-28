@@ -6,7 +6,7 @@ export const VideoProvider = ({ children }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch('https://json-nu-woad.vercel.app/videos')
+    fetch('https://tourmaline-climbing-runner.glitch.me/videos')
       .then((resposta) => resposta.json())
       .then((dados) => {
         setVideos(dados);
@@ -15,7 +15,7 @@ export const VideoProvider = ({ children }) => {
 
   const deletarVideo = async (id) => {
     try {
-      const response = await fetch(`https://json-nu-woad.vercel.app/videos/${id}`, {
+      const response = await fetch(`https://tourmaline-climbing-runner.glitch.me/videos/${id}`, {
         method: 'DELETE',
       });
 
@@ -32,7 +32,7 @@ export const VideoProvider = ({ children }) => {
 
   const editarVideo = async (videoEditado) => {
     try {
-      const response = await fetch(`https://json-nu-woad.vercel.app/videos/${videoEditado.id}`, {
+      const response = await fetch(`https://tourmaline-climbing-runner.glitch.me/videos/${videoEditado.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const VideoProvider = ({ children }) => {
 
   const adicionarVideo = async (novoVideo) => {
     try {
-      const response = await fetch('https://json-nu-woad.vercel.app/videos', {
+      const response = await fetch('https://tourmaline-climbing-runner.glitch.me/videos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
